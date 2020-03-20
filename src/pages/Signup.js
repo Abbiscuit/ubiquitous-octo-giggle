@@ -5,21 +5,48 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Box from '@material-ui/core/Box';
-import { Link } from 'react-router-dom';
+
+import AlreadyUser from '../components/AlreadyUser';
+import { auth } from '../firebase/firebase.utils';
 
 const Signup = () => {
-  const [username, setUsername] = useState('');
+  const [credentials, setCredentials] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log(username);
-    setUsername('');
+
+    if (password !== confirmPassword) {
+      alert('パスワードをご確認ください');
+      return;
+    }
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(result => {
+        console.log(result.user);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
+    setCredentials({
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    });
   };
 
   const handleChange = e => {
-    setUsername(e.target.value);
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
+
+  const { username, email, password, confirmPassword } = credentials;
 
   return (
     <div
@@ -31,8 +58,9 @@ const Signup = () => {
         <Card style={{ marginBottom: 24 }}>
           <CardContent>
             <TextField
+              name="username"
               type="text"
-              label="Username"
+              label="ユーザー名"
               fullWidth
               required
               autoComplete="username"
@@ -40,25 +68,34 @@ const Signup = () => {
               value={username}
             />
             <TextField
+              name="email"
               type="email"
-              label="Email"
+              label="メールアドレス"
               fullWidth
               required
               autoComplete="email"
+              onChange={handleChange}
+              value={email}
             />
             <TextField
+              name="password"
               type="password"
-              label="Password"
+              label="パスワード"
               fullWidth
               required
               autoComplete="current-password"
+              onChange={handleChange}
+              value={password}
             />
             <TextField
+              name="confirmPassword"
               type="password"
-              label="Confirm Password"
+              label="パスワード(確認）"
               fullWidth
               required
               autoComplete="current-password"
+              onChange={handleChange}
+              value={confirmPassword}
             />
           </CardContent>
           <CardActions>
@@ -69,25 +106,13 @@ const Signup = () => {
               color="primary"
               fullWidth
             >
-              Signup
+              登録
             </Button>
           </CardActions>
         </Card>
       </form>
 
-      <Box>
-        <Button
-          size="small"
-          variant="text"
-          color="primary"
-          fullWidth
-          centerRipple
-          component={Link}
-          to="/login"
-        >
-          Already have an account?
-        </Button>
-      </Box>
+      <AlreadyUser />
     </div>
   );
 };

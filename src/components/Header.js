@@ -52,10 +52,10 @@ const Header = ({ toggleDrawer, currentUser }) => {
           ) : (
             <>
               <Button color="inherit" component={Link} to="/signup">
-                Signup
+                登録
               </Button>
               <Button color="inherit" component={Link} to="/login">
-                Login
+                ログイン
               </Button>
             </>
           )}

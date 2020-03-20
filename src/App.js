@@ -57,7 +57,13 @@ const App = () => {
               currentUser ? <Redirect to="/" /> : <Login {...props} />
             }
           />
-          <Route exact path="/signup" render={() => <Signup />} />
+          <Route
+            exact
+            path="/signup"
+            render={props =>
+              currentUser ? <Redirect to="/" /> : <Signup {...props} />
+            }
+          />
           <Route exact path="/feed" render={() => <Feed />} />
         </Switch>
       </HeaderDrawer>

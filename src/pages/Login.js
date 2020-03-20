@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,9 +6,36 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
-import { signInWithGoogle } from '../firebase/firebase.utils';
+import { signInWithGoogle, auth } from '../firebase/firebase.utils';
 
 const Login = () => {
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: ''
+  });
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    console.log(credentials);
+
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(result => console.log(result.credential))
+      .catch(err => console.error(err));
+
+    setCredentials({
+      email: '',
+      password: ''
+    });
+  };
+
+  const handleChange = e => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+
+  const { email, password } = credentials;
+
   return (
     <div
       style={{
@@ -16,26 +43,27 @@ const Login = () => {
       }}
     >
       <Card style={{ marginBottom: 24 }}>
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-            console.log('Submitted');
-          }}
-        >
+        <form onSubmit={handleSubmit}>
           <CardContent>
             <TextField
+              name="email"
               type="email"
-              label="Email"
+              label="メールアドレス"
               fullWidth
               required
               autoComplete="email"
+              onChange={handleChange}
+              value={email}
             />
             <TextField
+              name="password"
               type="password"
-              label="Password"
+              label="パスワード"
               fullWidth
               required
               autoComplete="current-password"
+              onChange={handleChange}
+              value={password}
             />
           </CardContent>
           <CardActions>
@@ -46,7 +74,7 @@ const Login = () => {
               variant="contained"
               fullWidth
             >
-              Login
+              ログイン
             </Button>
           </CardActions>
         </form>

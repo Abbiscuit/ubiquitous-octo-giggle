@@ -32,7 +32,7 @@ const ProfileFeed = () => {
                 H
               </Avatar>
             }
-            title="通しすがりのJS兄さん"
+            title="通りすがりのJS兄さん"
           />
 
           <CardContent>
@@ -72,7 +72,7 @@ const ProfileFeed = () => {
                 H
               </Avatar>
             }
-            title="通しすがりのJS兄さん"
+            title="通りすがりのJS兄さん"
           />
           <CardContent>
             <Typography variant="body2" color="textPrimary" component="p">
