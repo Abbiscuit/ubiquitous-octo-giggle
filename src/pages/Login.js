@@ -6,6 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
+import { signInWithGoogle } from '../firebase/firebase.utils';
 
 const Login = () => {
   return (
@@ -57,6 +58,7 @@ const Login = () => {
           color="primary"
           fullWidth
           centerRipple
+          onClick={signInWithGoogle}
         >
           Sign in with Google
         </Button>

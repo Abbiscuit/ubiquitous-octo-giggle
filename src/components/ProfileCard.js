@@ -8,7 +8,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import FormDialog from './FormDialog';
 
-const ProfileCard = () => {
+const ProfileCard = ({ displayName }) => {
   return (
     <Card style={{ marginBottom: 8, marginTop: -8 }} elevation={0} square>
       <CardMedia
@@ -17,6 +17,9 @@ const ProfileCard = () => {
         title="User name"
       />
       <CardContent>
+        <Typography variant="h5" component="h3" gutterBottom>
+          {displayName}
+        </Typography>
         <Typography gutterBottom>
           食べ歩き
           <span role="img" aria-label="rice">

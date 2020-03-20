@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Header = ({ toggleDrawer }) => {
+const Header = ({ toggleDrawer, currentUser }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -38,12 +38,27 @@ const Header = ({ toggleDrawer }) => {
           <Typography variant="h6" className={classes.title}>
             Reactyyy
           </Typography>
-          <Button color="inherit" component={Link} to="/login">
-            Login
-          </Button>
-          <Button color="inherit" component={Link} to="/signup">
-            Signup
-          </Button>
+
+          {currentUser ? (
+            <Button
+              color="inherit"
+              component={Link}
+              to="/profile"
+              variant="outlined"
+              size="small"
+            >
+              プロフィール
+            </Button>
+          ) : (
+            <>
+              <Button color="inherit" component={Link} to="/signup">
+                Signup
+              </Button>
+              <Button color="inherit" component={Link} to="/login">
+                Login
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </div>

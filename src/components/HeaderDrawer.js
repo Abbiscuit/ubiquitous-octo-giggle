@@ -10,6 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import Header from './Header';
 import { Link } from 'react-router-dom';
+import { auth } from '../firebase/firebase.utils';
 
 const useStyles = makeStyles({
   list: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
   }
 });
 
-const HeaderDrawer = ({ children }) => {
+const HeaderDrawer = ({ children, currentUser }) => {
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -65,7 +66,7 @@ const HeaderDrawer = ({ children }) => {
           <ListItemText primary="ブックマーク" />
         </ListItem>
       </List> */}
-      <Divider />
+
       <List>
         <ListItem button component={Link} to="/">
           <ListItemIcon>
@@ -79,19 +80,40 @@ const HeaderDrawer = ({ children }) => {
           </ListItemIcon>
           <ListItemText primary="プロフィール" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component={Link} to="/favorites">
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText primary="ブックマーク" />
+          <ListItemText primary="お気に入り" />
         </ListItem>
       </List>
+
+      {currentUser && (
+        <>
+          <Divider />
+
+          <List>
+            <ListItem button component={Link} to="/">
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="ログアウト"
+                onClick={() => auth.signOut()}
+              />
+            </ListItem>
+          </List>
+        </>
+      )}
     </div>
   );
 
   return (
     <div>
-      <Header toggleDrawer={toggleDrawer(anchor, true)} />
+      <Header
+        toggleDrawer={toggleDrawer(anchor, true)}
+        currentUser={currentUser}
+      />
       <SwipeableDrawer
         disableBackdropTransition
         anchor={anchor}
