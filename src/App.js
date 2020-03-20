@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Switch, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import HeaderDrawer from './components/HeaderDrawer';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Feed from './components/Feed';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <CssBaseline />
+      <HeaderDrawer test="test">
+        <Switch>
+          <Route exact path="/" render={() => <Home />} />
+          <Route exact path="/profile" render={() => <Profile />} />
+          <Route exact path="/login" render={() => <Login />} />
+          <Route exact path="/signup" render={() => <Signup />} />
+          <Route exact path="/feed" render={() => <Feed />} />
+        </Switch>
+      </HeaderDrawer>
+    </React.Fragment>
   );
-}
+};
 
 export default App;
